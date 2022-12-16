@@ -23,7 +23,7 @@
 	"rules": {
 		"react/react-in-jsx-scope": "off",
 		"@typescript-eslint/semi": ["error", "never"],
-		"@typescript-eslint/indent": ["error", "tab"],
+		// "@typescript-eslint/indent": ["error", "tab"],
 		"react/jsx-indent": ["error", "tab"],
 		"no-tabs": "off"
 	}
