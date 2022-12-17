@@ -1,7 +1,8 @@
 import { Button, Form, OverlayTrigger, Popover } from 'react-bootstrap'
 import { useState } from 'react'
+import { SummaryFormProps } from './SummaryForm.interface'
 
-function SummaryForm() {
+function SummaryForm({ setOrderPhase }: SummaryFormProps) {
 	const [checked, setChecked] = useState(false)
 
 	const popover = (
@@ -28,7 +29,11 @@ function SummaryForm() {
 					onChange={e => setChecked(e.target.checked)}
 				/>
 			</Form.Group>
-			<Button variant="primary" type="submit" disabled={!checked}>
+			<Button
+				variant="primary"
+				type="submit"
+				disabled={!checked}
+				onClick={() => setOrderPhase('completed')}>
 				Confirm order
 			</Button>
 		</Form>

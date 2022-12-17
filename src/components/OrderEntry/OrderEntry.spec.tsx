@@ -1,5 +1,6 @@
 import { rest } from 'msw'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 import { render, screen, waitFor } from '../../test-utils/testing-library-utils'
 import server from '../../mocks/server'
 import OrderEntry from './OrderEntry'
@@ -14,7 +15,7 @@ test('Displays AlertBanner component if axios call throws error', async () => {
 		}),
 	)
 
-	render(<OrderEntry />)
+	render(<OrderEntry setOrderPhase={vi.fn()} />)
 	await waitFor(async () => {
 		const alerts = await screen.findAllByRole('alert')
 		expect(alerts).toHaveLength(2)
@@ -23,12 +24,12 @@ test('Displays AlertBanner component if axios call throws error', async () => {
 
 describe('grand total', () => {
 	test('grand total starts out $0.00', async () => {
-		render(<OrderEntry />)
+		render(<OrderEntry setOrderPhase={vi.fn()} />)
 		const grandTotal = screen.getByRole('heading', { name: /grand total: \$/i })
 		expect(grandTotal).toHaveTextContent('0.00')
 	})
 	test('grand total updates properly if scoop is added first', async () => {
-		render(<OrderEntry />)
+		render(<OrderEntry setOrderPhase={vi.fn()} />)
 		const grandTotal = screen.getByRole('heading', { name: /grand total: \$/i })
 		const vanillaInput = await screen.findByRole('spinbutton', {
 			name: 'Vanilla',
@@ -38,7 +39,7 @@ describe('grand total', () => {
 		expect(grandTotal).toHaveTextContent('2.00')
 	})
 	test('grand total updates properly if topping is added first', async () => {
-		render(<OrderEntry />)
+		render(<OrderEntry setOrderPhase={vi.fn()} />)
 		const grandTotal = screen.getByRole('heading', { name: /grand total: \$/i })
 		const cherriesCheckbox = await screen.findByRole('checkbox', {
 			name: 'Cherries',
@@ -47,7 +48,7 @@ describe('grand total', () => {
 		expect(grandTotal).toHaveTextContent('1.50')
 	})
 	test('grand total updates properly if item is removed', async () => {
-		render(<OrderEntry />)
+		render(<OrderEntry setOrderPhase={vi.fn()} />)
 		const grandTotal = screen.getByRole('heading', { name: /grand total: \$/i })
 		const cherriesCheckbox = await screen.findByRole('checkbox', {
 			name: 'Cherries',

@@ -38,6 +38,7 @@
 			"tab"
 		],
 		"no-tabs": "off",
-		"import/prefer-default-export": "off"
+		"import/prefer-default-export": "off",
+		"react/jsx-no-bind": "off"
 	}
 }

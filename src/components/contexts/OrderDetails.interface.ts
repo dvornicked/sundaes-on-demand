@@ -1,7 +1,11 @@
 import { ReactNode } from 'react'
 import { OptionType } from '../Options/Options.interface'
 
-export type OrderDetailsType = [OptionTotalCountsType, UpdateItemCountType]
+export type OrderDetailsType = [
+	OptionTotalCountsType,
+	UpdateItemCountType,
+	ResetOrderType,
+]
 
 export type OptionCountsType = {
 	scoops: Map<string, number>
@@ -23,6 +27,8 @@ export type UpdateItemCountType = (
 	newItemCount: string,
 	optionType: OptionType,
 ) => void
+
+export type ResetOrderType = () => void
 
 export interface OrderDetailsProviderProps {
 	children: ReactNode
