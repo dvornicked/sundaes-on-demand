@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { vi } from 'vitest'
 import SummaryForm from './SummaryForm'
 
 test('Initial conditions', () => {
-	render(<SummaryForm />)
+	render(<SummaryForm setOrderPhase={vi.fn()} />)
 
 	const checkbox = screen.getByRole('checkbox', {
 		name: /terms and conditions/i,
@@ -17,7 +18,7 @@ test('Initial conditions', () => {
 })
 
 test('Checkbox enables button on first click and disables on second click', async () => {
-	render(<SummaryForm />)
+	render(<SummaryForm setOrderPhase={vi.fn()} />)
 
 	const checkbox = screen.getByRole('checkbox', {
 		name: /terms and conditions/i,
@@ -39,7 +40,7 @@ test('Checkbox enables button on first click and disables on second click', asyn
 })
 
 test('popover responds to hover', async () => {
-	render(<SummaryForm />)
+	render(<SummaryForm setOrderPhase={vi.fn()} />)
 
 	// popover starts out hidden
 	const nullPopover = screen.queryByText(
