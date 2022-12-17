@@ -7,4 +7,6 @@ export interface IScoopOption {
 
 export interface ScoopOptionProps
 	extends HTMLAttributes<HTMLDivElement>,
-		IScoopOption {}
+		IScoopOption {
+	updateItemCount: (itemName: string, newItemCount: string) => void
+}
