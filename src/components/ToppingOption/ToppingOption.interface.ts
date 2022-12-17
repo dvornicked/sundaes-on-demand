@@ -1,5 +1,4 @@
 import { HTMLAttributes } from 'react'
-import { UpdateItemCountType } from '../contexts/OrderDetails.interface'
 
 export interface IToppingOption {
 	name: string
@@ -9,5 +8,5 @@ export interface IToppingOption {
 export interface ToppingOptionProps
 	extends HTMLAttributes<HTMLDivElement>,
 		IToppingOption {
-	updateItemCount: UpdateItemCountType
+	updateItemCount: (itemName: string, newItemCount: string) => void
 }

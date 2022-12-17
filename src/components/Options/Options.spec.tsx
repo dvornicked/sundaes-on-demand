@@ -1,7 +1,6 @@
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '../../test-utils/testing-library-utils'
 import Options from './Options'
-import { OrderDetailsProvider } from '../contexts/OrderDetails'
 
 test('Displays image for each scoop option from server', async () => {
 	render(<Options optionType="scoops" />)
@@ -36,7 +35,7 @@ test('Displays image for each topping option from server', async () => {
 })
 
 test('Update scoop subtotal when scoops change', async () => {
-	render(<Options optionType="scoops" />, { wrapper: OrderDetailsProvider })
+	render(<Options optionType="scoops" />)
 
 	// make sure total starts out $0.00
 	const scoopsSubtotal = screen.getByText('Scoops total: $', { exact: false })
@@ -46,6 +45,7 @@ test('Update scoop subtotal when scoops change', async () => {
 	const vanillaInput = await screen.findByRole('spinbutton', {
 		name: 'Vanilla',
 	})
+
 	expect(vanillaInput).toBeInTheDocument()
 	await userEvent.clear(vanillaInput)
 	await userEvent.type(vanillaInput, '1')
@@ -55,8 +55,35 @@ test('Update scoop subtotal when scoops change', async () => {
 	const chocolateInput = await screen.findByRole('spinbutton', {
 		name: 'Chocolate',
 	})
+
 	expect(chocolateInput).toBeInTheDocument()
 	await userEvent.clear(chocolateInput)
 	await userEvent.type(chocolateInput, '2')
 	expect(scoopsSubtotal).toHaveTextContent('6.00')
+})
+
+test('Update toppings subtotal when toppings change', async () => {
+	render(<Options optionType="toppings" />)
+	// make sure total starts out $0.00
+	const toppingsSubtotal = screen.getByText('Toppings total: $', {
+		exact: false,
+	})
+	expect(toppingsSubtotal).toHaveTextContent('0.00')
+	// add cherries and check the subtotal
+	const cherriesCheckbox = await screen.findByRole('checkbox', {
+		name: 'Cherries',
+	})
+	expect(cherriesCheckbox).toBeInTheDocument()
+	await userEvent.click(cherriesCheckbox)
+	expect(toppingsSubtotal).toHaveTextContent('1.50')
+	// add hot fudge and check the subtotal
+	const hotFudgeCheckbox = await screen.findByRole('checkbox', {
+		name: 'Hot fudge',
+	})
+	expect(hotFudgeCheckbox).toBeInTheDocument()
+	await userEvent.click(hotFudgeCheckbox)
+	expect(toppingsSubtotal).toHaveTextContent('3.00')
+	// remove cherries and check the subtotal
+	await userEvent.click(cherriesCheckbox)
+	expect(toppingsSubtotal).toHaveTextContent('1.50')
 })
